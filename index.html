@@ -63,12 +63,9 @@ function bugHistory(idArr){
 					$.each(bugHistory, function (key0, value0) {
 					    $.each(value0["history"], function(key1, value1){
 					    	 $.each(value1["changes"], function(key2, value2){
-					    	if(value2["field_name"]=="status" && value2["added"] == "RESOLVED"){
-					    		console.log(value0);
-					    		console.log(value1["when"]);
-					    		console.log(value2["removed"]+" "+value2["added"]);
+					    	if(value2["field_name"]=="status" && (value2["added"] == "RESOLVED" || value2["added"] == "REOPENED" )){
+					    		bugObjects[key0].resolved_date=value1["when"];
 					    	 }
-					    	 //console.log(bugObjects);
 					    })
 					    })	    
 					})

@@ -6,7 +6,7 @@ import json
 # the results are pushed out to a text file named Output.txt
 # we need to make this script able to accept data sent from the js file
 # it should also be able to send back the ID's as an array or a json obj
-url = 'https://bugzilla.mozilla.org/buglist.cgi?resolution=---&resolution=WORKSFORME&resolution=INCOMPLETE&resolution=SUPPORT&query_format=advanced&bug_status=REOPENED&bug_status=RESOLVED&component=Collector%20Extension&component=Compatibility%20Tools&product=addons.mozilla.org%20Graveyard'
+url = ''
 htmlFile = urllib.urlopen(url)
 htmlText = htmlFile.read()
 

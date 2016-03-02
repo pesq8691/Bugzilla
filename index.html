@@ -10,11 +10,11 @@
 var bugObjects = [];
 
 //This function will recieve the bug IDs and create bug objects
-function search(){
+function search(BugIDs){
 	var bugIDArr = [];
 	var params = [{
 	  /* The authentication parameters */
-	  "ids":$('#searchQuery').val() 
+	  "ids":BugIDs
 	}];
 	var myObject = {
 	  "method": "Bug.get",
@@ -44,11 +44,21 @@ function search(){
 // This function will call the python script and recieve the bug ID's
 // It will grab the url pasted and send it to the python script through an ajax call
 function callPython(){
-	$.ajax({"contentType": "application/json",
-	     "url": "scrape.py",
+	var params = [{
+	  "url":$('#searchQuery').val() 
+	}];
+	var myObject = {
+	  "params": JSON.stringify(params)
+	};
+	
+	 $.ajax({"contentType": "application/json",
+	     "data": myObject, /* jQuery will handle URI encoding */
+	     "crossDomain": "true",
+	     "dataType": "jsonp", /* jQuery will handle adding the 'callback' parameter */
+	     "url": "test.py",
 	     "type": "GET",
 	     success: function(data){
-
+	     			search()//Pass the bugID's in array form into here
 	              },
 	     error: function () {
 	     alert("Failed")
@@ -96,7 +106,7 @@ function bugHistory(idArr){
 </script>
   <body>
     <h1>Bugzilla Tool</h1>
-    <form onsubmit="return search()">
+    <form onsubmit="return callPython()">
   <input type="text" id="searchQuery">
   <input type="submit" name="Submit" value="Go">
 </form>

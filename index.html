@@ -9,14 +9,15 @@
 <script type="text/javascript" >
 var bugObjects = [];
 
+//This function will recieve the bug IDs and create bug objects
 function search(){
 	var bugIDArr = [];
 	var params = [{
 	  /* The authentication parameters */
-	  "quicksearch":$('#searchQuery').val() 
+	  "ids":$('#searchQuery').val() 
 	}];
 	var myObject = {
-	  "method": "Bug.search",
+	  "method": "Bug.get",
 	  "params": JSON.stringify(params)
 	};
 	
@@ -32,16 +33,32 @@ function search(){
 					    bugIDArr.push(value["id"]);
 					    bugObjects.push({"id":value["id"], "creation_date":value["creation_time"],"resolved_date":""});
 					})
-					
 					bugHistory(bugIDArr);
 	              },
 	     error: function () {
 	     alert("Failed")
 	     }
 	    });
-	 	 return false
+	return false
+}
+// This function will call the python script and recieve the bug ID's
+// It will grab the url pasted and send it to the python script through an ajax call
+function callPython(){
+	$.ajax({"contentType": "application/json",
+	     "url": "scrape.py",
+	     "type": "GET",
+	     success: function(data){
+
+	              },
+	     error: function () {
+	     alert("Failed")
+	     }
+	    });
+	return false
 }
 
+// This function will receive all the bugID's 
+// and will pass their history into our bug object
 function bugHistory(idArr){
 	var params = [{
 	  /* The authentication parameters */
@@ -63,7 +80,8 @@ function bugHistory(idArr){
 					$.each(bugHistory, function (key0, value0) {
 					    $.each(value0["history"], function(key1, value1){
 					    	 $.each(value1["changes"], function(key2, value2){
-					    	if(value2["field_name"]=="status" && (value2["added"] == "RESOLVED" || value2["added"] == "REOPENED" )){
+					    	if(value2["field_name"]=="status" 
+					    		&& (value2["added"] == "RESOLVED" || value2["added"] == "REOPENED" )){
 					    		bugObjects[key0].resolved_date=value1["when"];
 					    	 }
 					    })
@@ -80,6 +98,6 @@ function bugHistory(idArr){
     <h1>Bugzilla Tool</h1>
     <form onsubmit="return search()">
   <input type="text" id="searchQuery">
-  <input type="submit" name="Submit" value="Search">
+  <input type="submit" name="Submit" value="Go">
 </form>
 </body>

@@ -1,11 +1,12 @@
 import urllib
 import re
+import json
 
 # insert any Bugzilla url here and run
 # the results are pushed out to a text file named Output.txt
-
-url = "https://bugzilla.mozilla.org/buglist.cgi?resolution=DUPLICATE&classification=Server%20Software&chfieldto=Now&query_format=advanced&chfieldfrom=2015-06-01&bug_status=UNCONFIRMED&bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&component=Consumer%20Pages&product=Marketplace";
-url2 = 'https://bugzilla.mozilla.org/buglist.cgi?resolution=---&resolution=WORKSFORME&resolution=INCOMPLETE&resolution=SUPPORT&query_format=advanced&bug_status=REOPENED&bug_status=RESOLVED&component=Collector%20Extension&component=Compatibility%20Tools&product=addons.mozilla.org%20Graveyard'
+# we need to make this script able to accept data sent from the js file
+# it should also be able to send back the ID's as an array or a json obj
+url = 'https://bugzilla.mozilla.org/buglist.cgi?resolution=---&resolution=WORKSFORME&resolution=INCOMPLETE&resolution=SUPPORT&query_format=advanced&bug_status=REOPENED&bug_status=RESOLVED&component=Collector%20Extension&component=Compatibility%20Tools&product=addons.mozilla.org%20Graveyard'
 htmlFile = urllib.urlopen(url)
 htmlText = htmlFile.read()
 

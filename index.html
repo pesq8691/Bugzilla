@@ -44,11 +44,8 @@ function search(BugIDs){
 // This function will call the python script and recieve the bug ID's
 // It will grab the url pasted and send it to the python script through an ajax call
 function callPython(){
-	var params = [{
-	  "url":$('#searchQuery').val() 
-	}];
 	var myObject = {
-	  "params": JSON.stringify(params)
+	  "url":$('#searchQuery').val()
 	};
 	
 	 $.ajax({"contentType": "application/json",
@@ -57,7 +54,8 @@ function callPython(){
 	     "url": "test.py",
 	     "type": "POST",
 	     success: function(data){
-	     			search()//Pass the bugID's in array form into here
+	     			console.log(data);
+	     			//search()//Pass the bugID's in array form into here
 	              },
 	     error: function () {
 	     alert("Failed")

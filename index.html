@@ -53,10 +53,9 @@ function callPython(){
 	
 	 $.ajax({"contentType": "application/json",
 	     "data": myObject, /* jQuery will handle URI encoding */
-	     "crossDomain": "true",
-	     "dataType": "jsonp", /* jQuery will handle adding the 'callback' parameter */
+	     "dataType": "json", /* jQuery will handle adding the 'callback' parameter */
 	     "url": "test.py",
-	     "type": "GET",
+	     "type": "POST",
 	     success: function(data){
 	     			search()//Pass the bugID's in array form into here
 	              },
